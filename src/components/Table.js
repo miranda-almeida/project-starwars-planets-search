@@ -4,20 +4,42 @@ function Table() {
   const endpoint = 'https://swapi.dev/api/planets';
   const [planetsList, setPlanetsList] = useState([]);
   const [openTable, setTable] = useState(false);
+  const [loadSearch, setLoadSearch] = useState([]);
+  const [searchInput, setSearchInput] = useState('');
 
   useEffect(() => {
     const getPlanets = async () => {
       const { results } = await fetch(endpoint).then((response) => response.json());
       results.forEach((planet) => delete planet.residents);
       setPlanetsList(results);
+      setLoadSearch(results);
       setTable(true);
     };
     getPlanets();
   }, []);
 
+  useEffect(() => {
+    const generateSearchList = () => {
+      const verifySearch = loadSearch.some((search) => (search.name)
+        .includes(searchInput));
+      if (verifySearch) {
+        const searchResults = loadSearch.filter((search) => (search.name)
+          .includes(searchInput));
+        setPlanetsList(searchResults);
+      }
+    };
+    generateSearchList();
+  }, [searchInput, loadSearch]);
+
   if (openTable) {
     return (
       <div>
+        <input
+          type="text"
+          placeholder="pesquisar"
+          data-testid="name-filter"
+          onChange={ ({ target }) => setSearchInput(target.value) }
+        />
         <table>
           <thead>
             <tr>
