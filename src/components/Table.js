@@ -2,7 +2,10 @@ import React, { useContext } from 'react';
 import StarwarsContext from '../context/StarwarsContext';
 
 function Table() {
-  const { planetsList, searchTextInput } = useContext(StarwarsContext);
+  const {
+    planetsList,
+    searchTextInput,
+  } = useContext(StarwarsContext);
 
   return (
     <div>
