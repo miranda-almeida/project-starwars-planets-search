@@ -30,9 +30,9 @@ h1 {
 
 }
 
-table { 
+table {
+  border-spacing: 0.1px;
   padding: 20px;
-  border-spacing: 0px;
 }
 
 table thead tr {
@@ -40,8 +40,8 @@ table thead tr {
 }
 
 table tbody td {
-  padding: 10px;
   border: 1px solid pink;
+  padding: 10px;
 }
 
 .App-link {
