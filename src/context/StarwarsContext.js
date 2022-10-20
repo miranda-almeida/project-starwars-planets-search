@@ -1,3 +1,5 @@
 import { createContext } from 'react';
 
-export default StarwarsContext = createContext();
+const StarwarsContext = createContext();
+
+export default StarwarsContext;

@@ -25,6 +25,25 @@
   min-height: 100vh;
 }
 
+h1 {
+  text-align: center;
+
+}
+
+table { 
+  padding: 20px;
+  border-spacing: 0px;
+}
+
+table thead tr {
+  font-size: 18px;
+}
+
+table tbody td {
+  padding: 10px;
+  border: 1px solid pink;
+}
+
 .App-link {
   color: #61dafb;
 }
