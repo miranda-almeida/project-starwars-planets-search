@@ -4,6 +4,7 @@ import StarwarsContext from './StarwarsContext';
 
 function StarwarsProvider({ children }) {
   const [planetsList, setPlanetsList] = useState([]);
+  const [searchTextInput, setSearchTextInput] = useState('');
 
   useEffect(() => {
     const endpoint = 'https://swapi.dev/api/planets';
@@ -16,7 +17,16 @@ function StarwarsProvider({ children }) {
     getPlanets();
   }, []);
 
-  const fetchPlanets = useMemo(() => ({ planetsList }), [planetsList]);
+  const applyTextInput = ({ target: { value } }) => {
+    setSearchTextInput(value);
+  };
+
+  const fetchPlanets = useMemo(() => ({
+    planetsList,
+    searchTextInput,
+    applyTextInput,
+  }), [planetsList, searchTextInput]);
+
   return (
     <StarwarsContext.Provider value={ fetchPlanets }>
       {children}

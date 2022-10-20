@@ -2,33 +2,10 @@ import React, { useContext } from 'react';
 import StarwarsContext from '../context/StarwarsContext';
 
 function Table() {
-  const { planetsList } = useContext(StarwarsContext);
-  // const [openTable, setTable] = useState(false);
-  // const [loadSearch, setLoadSearch] = useState([]);
-  // const [searchInput, setSearchInput] = useState('');
+  const { planetsList, searchTextInput } = useContext(StarwarsContext);
 
-  // useEffect(() => {
-  //   const generateSearchList = () => {
-  //     const verifySearch = loadSearch.some((search) => (search.name)
-  //       .includes(searchInput));
-  //     if (verifySearch) {
-  //       const searchResults = loadSearch.filter((search) => (search.name)
-  //         .includes(searchInput));
-  //       setPlanetsList(searchResults);
-  //     }
-  //   };
-  //   generateSearchList();
-  // }, [searchInput, loadSearch]);
-
-  // if (openTable) {
   return (
     <div>
-      {/* <input
-        type="text"
-        placeholder="pesquisar"
-        data-testid="name-filter"
-        onChange={ ({ target }) => setSearchInput(target.value) }
-      /> */}
       <table>
         <thead>
           <tr>
@@ -55,6 +32,7 @@ function Table() {
         </thead>
         <tbody>
           {planetsList
+            .filter((key) => key.name.includes(searchTextInput))
             .map(({
               name,
               rotation_period: rotation,
