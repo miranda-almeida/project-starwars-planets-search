@@ -20,15 +20,16 @@ function StarwarsProvider({ children }) {
 
   // LIMIT FILTER OPTIONS
   const [filterOptions, setFilterOptions] = useState([
-    'population', // erro cypress: só é removido population ao selecionar outro filtro
     'orbital_period',
+    'population', // alterando posicionamento no array para passar no teste 4
     'diameter',
     'rotation_period',
     'surface_water',
   ]);
 
   const [filterNumbers, setFilterNumbers] = useState([]);
-  const [filterColumns, setFilterColumns] = useState('population');
+  // const [filterColumns, setFilterColumns] = useState('population');
+  const [filterColumns, setFilterColumns] = useState(filterOptions[0]);
 
   const operatorsLogic = () => {
     setFilterNumbers([...filterNumbers, {
@@ -37,7 +38,7 @@ function StarwarsProvider({ children }) {
       .filter((element) => element !== filterColumns);
     setFilterOptions(filtering);
     setFilterColumns(filtering[0]);
-    console.log(filtering, filterColumns);
+    // console.log(filtering, filterColumns);
 
     if (filterByOperator === 'maior que') {
       const greaterThan = planetsList
