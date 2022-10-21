@@ -9,8 +9,7 @@ function StarwarsProvider({ children }) {
   const [searchTextInput, setSearchTextInput] = useState('');
 
   // FILTERS
-  const [filterByColumn, setFilterByColumn] = useState('population'); // DROPDOWN SELECTOR, COLUMNS
-  const columns = ({ target: { value } }) => setFilterByColumn(value);
+  // const [filterByColumn, setFilterByColumn] = useState('population'); // DROPDOWN SELECTOR, COLUMNS
 
   const [filterByOperator, setFilterByOperator] = useState('maior que'); // DROPDOWN SELECTOR, COMPARISON OPERATORS
   const operators = ({ target: { value } }) => setFilterByOperator(value);
@@ -20,8 +19,8 @@ function StarwarsProvider({ children }) {
 
   // LIMIT FILTER OPTIONS
   const [filterOptions, setFilterOptions] = useState([
+    'population', // alterar a ordem passa no 4 mas quebra o 6
     'orbital_period',
-    'population', // alterando posicionamento no array para passar no teste 4
     'diameter',
     'rotation_period',
     'surface_water',
@@ -29,32 +28,32 @@ function StarwarsProvider({ children }) {
 
   const [filterNumbers, setFilterNumbers] = useState([]);
   // const [filterColumns, setFilterColumns] = useState('population');
-  const [filterColumns, setFilterColumns] = useState(filterOptions[0]);
-
+  const [filterColumns, setFilterColumns] = useState(filterOptions[0]); // passando no 6, quebra o 4
+  const columns = ({ target: { value } }) => setFilterColumns(value);
   const operatorsLogic = () => {
     setFilterNumbers([...filterNumbers, {
       filterColumns, operator: filterByOperator, value: filterByNumber }]);
     const filtering = filterOptions
-      .filter((element) => element !== filterColumns);
+      .filter((element) => (element !== filterColumns));
+    console.log(filtering);
     setFilterOptions(filtering);
     setFilterColumns(filtering[0]);
-    // console.log(filtering, filterColumns);
 
     if (filterByOperator === 'maior que') {
       const greaterThan = planetsList
-        .filter((element) => +element[filterByColumn] > +filterByNumber);
+        .filter((element) => +element[filterColumns] > +filterByNumber);
       setPlanetsList(greaterThan);
     }
 
     if (filterByOperator === 'menor que') {
       const lessThan = planetsList
-        .filter((element) => +element[filterByColumn] < +filterByNumber);
+        .filter((element) => +element[filterColumns] < +filterByNumber);
       setPlanetsList(lessThan);
     }
 
     if (filterByOperator === 'igual a') {
       const equalsTo = planetsList
-        .filter((element) => +element[filterByColumn] === +filterByNumber);
+        .filter((element) => +element[filterColumns] === +filterByNumber);
       setPlanetsList(equalsTo);
     }
   };
@@ -81,7 +80,7 @@ function StarwarsProvider({ children }) {
     planetsList,
     searchTextInput,
     applyTextInput,
-    filterByColumn,
+    filterColumns,
     columns,
     filterByOperator,
     operators,
@@ -93,7 +92,7 @@ function StarwarsProvider({ children }) {
   }), [
     planetsList,
     searchTextInput,
-    filterByColumn,
+    filterColumns,
     filterByOperator,
     filterByNumber,
     filterOptions,
