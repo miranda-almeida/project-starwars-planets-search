@@ -18,7 +18,27 @@ function StarwarsProvider({ children }) {
   const [filterByNumber, setFilterByNumber] = useState(0); // INPUT FOR NUMBER
   const numbers = ({ target: { value } }) => setFilterByNumber(value);
 
+  // LIMIT FILTER OPTIONS
+  const [filterOptions, setFilterOptions] = useState([
+    'population', // erro cypress: só é removido population ao selecionar outro filtro
+    'orbital_period',
+    'diameter',
+    'rotation_period',
+    'surface_water',
+  ]);
+
+  const [filterNumbers, setFilterNumbers] = useState([]);
+  const [filterColumns, setFilterColumns] = useState('population');
+
   const operatorsLogic = () => {
+    setFilterNumbers([...filterNumbers, {
+      filterColumns, operator: filterByOperator, value: filterByNumber }]);
+    const filtering = filterOptions
+      .filter((element) => element !== filterColumns);
+    setFilterOptions(filtering);
+    setFilterColumns(filtering[0]);
+    console.log(filtering, filterColumns);
+
     if (filterByOperator === 'maior que') {
       const greaterThan = planetsList
         .filter((element) => +element[filterByColumn] > +filterByNumber);
@@ -37,7 +57,7 @@ function StarwarsProvider({ children }) {
       setPlanetsList(equalsTo);
     }
   };
-  console.log(operatorsLogic);
+  // console.log(operatorsLogic);
 
   // FETCH API
   useEffect(() => {
@@ -67,12 +87,15 @@ function StarwarsProvider({ children }) {
     filterByNumber,
     numbers,
     operatorsLogic,
+    filterOptions,
+    filterNumbers,
   }), [
     planetsList,
     searchTextInput,
     filterByColumn,
     filterByOperator,
     filterByNumber,
+    filterOptions,
     // operatorsLogic,
   ]);
 

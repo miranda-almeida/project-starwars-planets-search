@@ -12,6 +12,7 @@ function Search() {
     filterByNumber,
     numbers,
     operatorsLogic,
+    filterOptions,
   } = useContext(StarwarsContext);
   return (
     <form>
@@ -28,7 +29,7 @@ function Search() {
         onChange={ columns }
         data-testid="column-filter"
       >
-        {['population', 'orbital_period', 'diameter', 'rotation_period', 'surface_water']
+        {filterOptions
           .map((selector) => (
             <option key={ selector } value={ selector }>
               { selector }
